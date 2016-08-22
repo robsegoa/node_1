@@ -1,0 +1,4593 @@
+module.exports = {
+    "actions" : [
+        {
+            "label" : "Rejeitar",
+            "action" : "rejectEntity"
+        },
+        {
+            "label" : "Transferir",
+            "action" : "transferEntity"
+        },
+        {
+            "label" : "Criar Oportunidade",
+            "action" : "createOpportunity"
+        }
+    ],
+    "opportunities" : [
+        {
+            "title" : "Avaliação de Mercado",
+            "type" : "avaliacaoMercado",
+            "firstyActivity" : "avalicao",
+            "sections" : [1],
+            "flow": [
+                {
+                    "step": 1,
+                    "title": "Avaliação de Mercado",
+                    "activiy" : "avalicao"
+                }
+            ]
+        },
+        {
+            "title" : "Registro de Contato",
+            "type" : "registroContato",
+            "firstyActivity" : "tipoContato",
+            "sections" : [2],
+            "flow": [
+                {
+                    "step": 1,
+                    "title": "Registro de Contato",
+                    "activiy" : "tipoContato"
+                }
+            ]
+        },
+        {
+            "title" : "Visita Prospecção",
+            "type" : "visitaProspeccao",
+            "firstyActivity" : "visita",
+            "sections" : [3],
+            "flow": [
+                {
+                    "step": 1,
+                    "title": "Visita Prospecção",
+                    "activiy" : "visita"
+                }
+            ]
+        },
+        {
+            "title" :  "Visita de Rotina (Cliente BR)",
+            "type" : "visitaRotina",
+            "firstyActivity" : "visita",
+            "sections" : [6],
+            "flow": [
+                {
+                    "step": 1,
+                    "title": "Visita Rotina",
+                    "activiy" : "visita"
+                }
+            ]
+        },
+        {
+            "title" : "Visita Técnica",
+            "type" : "visitaTecnica",
+            "firstyActivity" : "tecnica",
+            "sections" : [4],
+            "flow": [
+                {
+                    "step": 1,
+                    "title": "Visita Técnica",
+                    "activiy" : "tecnica"
+                }
+            ]
+        },
+        {
+            "title" : "Negociação",
+            "type" : "negociacao",
+            "firstyActivity" : "negociacao",
+            "sections" : [0, 5],
+            "flow" : [
+                {
+                    "step": 1,
+                    "title": "Em Negociação",
+                    "activiy" : "negociacao"
+                },{
+                    "step": 2,
+                    "title": "Finalizada",
+                    "activiy" : "finalizacao",
+                    "updateStatus" : true
+                }
+            ]
+        },
+        {
+            "disabled": true,
+            "title" : "Visita de Manutenção",
+            "type" : "visitaManutencao",
+            "firstyActivity" : "manutencao",
+            "sections" : [7],
+            "flow": [
+                {
+                    "step": 1,
+                    "title": "Visita de Manutenção",
+                    "activiy" : "manutencao"
+                }
+            ]
+        }
+    ],
+    "activities" : {
+        "avalicao" :    {
+            "type" : "avalicao",
+            "form" : {
+                "type" : "avalicao",
+                "fields" : [
+                    {
+                        "id" : "isClienteBR",
+                        "label" : "O cliente é 100% BR ?",
+                        "type" : "boolean",
+                        "expand" : true,
+                        "require" : true
+                    },
+                    {
+                        "id" : "dataDoRegistro",
+                        "label" : "Data do Registro",
+                        "type" : "date",
+                        "mask" : "DD/MM/YYYY",
+                        "expand" : true,
+                        "require" : true,
+                        "condition" : {
+                            "field" : "isClienteBR",
+                            "situation" : "false"
+                        }
+                    },
+                    {
+                        "id": "diesel",
+                        "label": "Diesel (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Distribuidora",
+                                "id": "distribuidora",
+                                "type": "label"
+                            },
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "value": "BR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "shell",
+                                "fields": [
+                                    {
+                                        "value": "shell",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "raizen",
+                                "fields": [
+                                    {
+                                        "value": "Raizen",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ipiranga",
+                                "fields": [
+                                    {
+                                        "value": "Ipiranga",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "airbp",
+                                "fields": [
+                                    {
+                                        "value": "Air BP",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ale",
+                                "fields": [
+                                    {
+                                        "value": "Ale",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "cosan",
+                                "fields": [
+                                    {
+                                        "value": "Cosan",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "castrol",
+                                "fields": [
+                                    {
+                                        "value": "Castrol",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "chevron",
+                                "fields": [
+                                    {
+                                        "value": "Chevron",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "petronas",
+                                "fields": [
+                                    {
+                                        "value": "Petronas",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "total",
+                                "fields": [
+                                    {
+                                        "value": "total",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ypf",
+                                "fields": [
+                                    {
+                                        "value": "YPF",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "trr",
+                                "fields": [
+                                    {
+                                        "value": "TRR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Outras",
+                                "fields": [
+                                    {
+                                        "value": "Outras",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition": {
+                            "field": "isClienteBR",
+                            "situation": "false"
+                        }
+                    },
+                    {
+                        "id": "lubrificantes",
+                        "label": "Lubrificantes (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Distribuidora",
+                                "id": "distribuidora",
+                                "type": "label"
+                            },
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "value": "BR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "shell",
+                                "fields": [
+                                    {
+                                        "value": "shell",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "raizen",
+                                "fields": [
+                                    {
+                                        "value": "Raizen",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ipiranga",
+                                "fields": [
+                                    {
+                                        "value": "Ipiranga",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "airbp",
+                                "fields": [
+                                    {
+                                        "value": "Air BP",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ale",
+                                "fields": [
+                                    {
+                                        "value": "Ale",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "cosan",
+                                "fields": [
+                                    {
+                                        "value": "Cosan",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "castrol",
+                                "fields": [
+                                    {
+                                        "value": "Castrol",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "chevron",
+                                "fields": [
+                                    {
+                                        "value": "Chevron",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "petronas",
+                                "fields": [
+                                    {
+                                        "value": "Petronas",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "total",
+                                "fields": [
+                                    {
+                                        "value": "total",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ypf",
+                                "fields": [
+                                    {
+                                        "value": "YPF",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "trr",
+                                "fields": [
+                                    {
+                                        "value": "TRR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Outras",
+                                "fields": [
+                                    {
+                                        "value": "Outras",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition": {
+                            "field": "isClienteBR",
+                            "situation": "false"
+                        }
+                    },
+                    {
+                        "id": "gasolina",
+                        "label": "Gasolina (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Distribuidora",
+                                "id": "distribuidora",
+                                "type": "label"
+                            },
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "value": "BR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "shell",
+                                "fields": [
+                                    {
+                                        "value": "shell",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "raizen",
+                                "fields": [
+                                    {
+                                        "value": "Raizen",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ipiranga",
+                                "fields": [
+                                    {
+                                        "value": "Ipiranga",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "airbp",
+                                "fields": [
+                                    {
+                                        "value": "Air BP",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ale",
+                                "fields": [
+                                    {
+                                        "value": "Ale",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "cosan",
+                                "fields": [
+                                    {
+                                        "value": "Cosan",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "castrol",
+                                "fields": [
+                                    {
+                                        "value": "Castrol",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "chevron",
+                                "fields": [
+                                    {
+                                        "value": "Chevron",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "petronas",
+                                "fields": [
+                                    {
+                                        "value": "Petronas",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "total",
+                                "fields": [
+                                    {
+                                        "value": "total",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ypf",
+                                "fields": [
+                                    {
+                                        "value": "YPF",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "trr",
+                                "fields": [
+                                    {
+                                        "value": "TRR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Outras",
+                                "fields": [
+                                    {
+                                        "value": "Outras",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition": {
+                            "field": "isClienteBR",
+                            "situation": "false"
+                        }
+                    },
+                    {
+                        "id": "alcool",
+                        "label": "Álcool (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Distribuidora",
+                                "id": "distribuidora",
+                                "type": "label"
+                            },
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "value": "BR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "shell",
+                                "fields": [
+                                    {
+                                        "value": "shell",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "raizen",
+                                "fields": [
+                                    {
+                                        "value": "Raizen",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ipiranga",
+                                "fields": [
+                                    {
+                                        "value": "Ipiranga",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "airbp",
+                                "fields": [
+                                    {
+                                        "value": "Air BP",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ale",
+                                "fields": [
+                                    {
+                                        "value": "Ale",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "cosan",
+                                "fields": [
+                                    {
+                                        "value": "Cosan",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "castrol",
+                                "fields": [
+                                    {
+                                        "value": "Castrol",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "chevron",
+                                "fields": [
+                                    {
+                                        "value": "Chevron",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "petronas",
+                                "fields": [
+                                    {
+                                        "value": "Petronas",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "total",
+                                "fields": [
+                                    {
+                                        "value": "total",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ypf",
+                                "fields": [
+                                    {
+                                        "value": "YPF",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "trr",
+                                "fields": [
+                                    {
+                                        "value": "TRR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Outras",
+                                "fields": [
+                                    {
+                                        "value": "Outras",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition": {
+                            "field": "isClienteBR",
+                            "situation": "false"
+                        }
+                    },
+                    {
+                        "id": "arla32",
+                        "label": "Arla 32 (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Distribuidora",
+                                "id": "distribuidora",
+                                "type": "label"
+                            },
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "value": "BR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "shell",
+                                "fields": [
+                                    {
+                                        "value": "shell",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "raizen",
+                                "fields": [
+                                    {
+                                        "value": "Raizen",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ipiranga",
+                                "fields": [
+                                    {
+                                        "value": "Ipiranga",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "airbp",
+                                "fields": [
+                                    {
+                                        "value": "Air BP",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ale",
+                                "fields": [
+                                    {
+                                        "value": "Ale",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "cosan",
+                                "fields": [
+                                    {
+                                        "value": "Cosan",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "castrol",
+                                "fields": [
+                                    {
+                                        "value": "Castrol",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "chevron",
+                                "fields": [
+                                    {
+                                        "value": "Chevron",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "petronas",
+                                "fields": [
+                                    {
+                                        "value": "Petronas",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "total",
+                                "fields": [
+                                    {
+                                        "value": "total",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ypf",
+                                "fields": [
+                                    {
+                                        "value": "YPF",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "trr",
+                                "fields": [
+                                    {
+                                        "value": "TRR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Outras",
+                                "fields": [
+                                    {
+                                        "value": "Outras",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition": {
+                            "field": "isClienteBR",
+                            "situation": "false"
+                        }
+                    },
+                    {
+                        "id": "combustiveisClarosEspeciais",
+                        "label": "Combustíveis Claros Especiais (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Distribuidora",
+                                "id": "distribuidora",
+                                "type": "label"
+                            },
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "value": "BR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "shell",
+                                "fields": [
+                                    {
+                                        "value": "shell",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "raizen",
+                                "fields": [
+                                    {
+                                        "value": "Raizen",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ipiranga",
+                                "fields": [
+                                    {
+                                        "value": "Ipiranga",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "airbp",
+                                "fields": [
+                                    {
+                                        "value": "Air BP",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ale",
+                                "fields": [
+                                    {
+                                        "value": "Ale",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "cosan",
+                                "fields": [
+                                    {
+                                        "value": "Cosan",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "castrol",
+                                "fields": [
+                                    {
+                                        "value": "Castrol",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "chevron",
+                                "fields": [
+                                    {
+                                        "value": "Chevron",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "petronas",
+                                "fields": [
+                                    {
+                                        "value": "Petronas",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "total",
+                                "fields": [
+                                    {
+                                        "value": "total",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ypf",
+                                "fields": [
+                                    {
+                                        "value": "YPF",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "trr",
+                                "fields": [
+                                    {
+                                        "value": "TRR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Outras",
+                                "fields": [
+                                    {
+                                        "value": "Outras",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition": {
+                            "field": "isClienteBR",
+                            "situation": "false"
+                        }
+                    },
+                    {
+                        "id": "combustiveisEscuros",
+                        "label": "Combustíveis Escuros (Ton)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Distribuidora",
+                                "id": "distribuidora",
+                                "type": "label"
+                            },
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "value": "BR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "shell",
+                                "fields": [
+                                    {
+                                        "value": "shell",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "raizen",
+                                "fields": [
+                                    {
+                                        "value": "Raizen",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ipiranga",
+                                "fields": [
+                                    {
+                                        "value": "Ipiranga",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "airbp",
+                                "fields": [
+                                    {
+                                        "value": "Air BP",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ale",
+                                "fields": [
+                                    {
+                                        "value": "Ale",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "cosan",
+                                "fields": [
+                                    {
+                                        "value": "Cosan",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "castrol",
+                                "fields": [
+                                    {
+                                        "value": "Castrol",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "chevron",
+                                "fields": [
+                                    {
+                                        "value": "Chevron",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "petronas",
+                                "fields": [
+                                    {
+                                        "value": "Petronas",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "total",
+                                "fields": [
+                                    {
+                                        "value": "total",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ypf",
+                                "fields": [
+                                    {
+                                        "value": "YPF",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "trr",
+                                "fields": [
+                                    {
+                                        "value": "TRR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Outras",
+                                "fields": [
+                                    {
+                                        "value": "Outras",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition": {
+                            "field": "isClienteBR",
+                            "situation": "false"
+                        }
+                    },
+                    {
+                        "id": "asfalto",
+                        "label": "Asfaltos (Ton)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Distribuidora",
+                                "id": "distribuidora",
+                                "type": "label"
+                            },
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "value": "BR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "shell",
+                                "fields": [
+                                    {
+                                        "value": "shell",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "raizen",
+                                "fields": [
+                                    {
+                                        "value": "Raizen",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ipiranga",
+                                "fields": [
+                                    {
+                                        "value": "Ipiranga",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "airbp",
+                                "fields": [
+                                    {
+                                        "value": "Air BP",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ale",
+                                "fields": [
+                                    {
+                                        "value": "Ale",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "cosan",
+                                "fields": [
+                                    {
+                                        "value": "Cosan",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "castrol",
+                                "fields": [
+                                    {
+                                        "value": "Castrol",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "chevron",
+                                "fields": [
+                                    {
+                                        "value": "Chevron",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "petronas",
+                                "fields": [
+                                    {
+                                        "value": "Petronas",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "total",
+                                "fields": [
+                                    {
+                                        "value": "total",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ypf",
+                                "fields": [
+                                    {
+                                        "value": "YPF",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "trr",
+                                "fields": [
+                                    {
+                                        "value": "TRR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Outras",
+                                "fields": [
+                                    {
+                                        "value": "Outras",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition": {
+                            "field": "isClienteBR",
+                            "situation": "false"
+                        }
+                    },
+                    {
+                        "id": "combistiveisAviacao",
+                        "label": "Combustíveis de Aviação (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Distribuidora",
+                                "id": "distribuidora",
+                                "type": "label"
+                            },
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "value": "BR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "shell",
+                                "fields": [
+                                    {
+                                        "value": "shell",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "raizen",
+                                "fields": [
+                                    {
+                                        "value": "Raizen",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ipiranga",
+                                "fields": [
+                                    {
+                                        "value": "Ipiranga",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "airbp",
+                                "fields": [
+                                    {
+                                        "value": "Air BP",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ale",
+                                "fields": [
+                                    {
+                                        "value": "Ale",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "cosan",
+                                "fields": [
+                                    {
+                                        "value": "Cosan",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "castrol",
+                                "fields": [
+                                    {
+                                        "value": "Castrol",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "chevron",
+                                "fields": [
+                                    {
+                                        "value": "Chevron",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "petronas",
+                                "fields": [
+                                    {
+                                        "value": "Petronas",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "total",
+                                "fields": [
+                                    {
+                                        "value": "total",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ypf",
+                                "fields": [
+                                    {
+                                        "value": "YPF",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "trr",
+                                "fields": [
+                                    {
+                                        "value": "TRR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Outras",
+                                "fields": [
+                                    {
+                                        "value": "Outras",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition": {
+                            "field": "isClienteBR",
+                            "situation": "false"
+                        }
+                    },
+                    {
+                        "id": "combistiveisSolidos",
+                        "label": "Combustíveis Sólidos (Ton)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Distribuidora",
+                                "id": "distribuidora",
+                                "type": "label"
+                            },
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "value": "BR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "shell",
+                                "fields": [
+                                    {
+                                        "value": "shell",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "raizen",
+                                "fields": [
+                                    {
+                                        "value": "Raizen",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ipiranga",
+                                "fields": [
+                                    {
+                                        "value": "Ipiranga",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "airbp",
+                                "fields": [
+                                    {
+                                        "value": "Air BP",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ale",
+                                "fields": [
+                                    {
+                                        "value": "Ale",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "cosan",
+                                "fields": [
+                                    {
+                                        "value": "Cosan",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "castrol",
+                                "fields": [
+                                    {
+                                        "value": "Castrol",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "chevron",
+                                "fields": [
+                                    {
+                                        "value": "Chevron",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "petronas",
+                                "fields": [
+                                    {
+                                        "value": "Petronas",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "total",
+                                "fields": [
+                                    {
+                                        "value": "total",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ypf",
+                                "fields": [
+                                    {
+                                        "value": "YPF",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "trr",
+                                "fields": [
+                                    {
+                                        "value": "TRR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Outras",
+                                "fields": [
+                                    {
+                                        "value": "Outras",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition": {
+                            "field": "isClienteBR",
+                            "situation": "false"
+                        }
+                    },
+                    {
+                        "id": "produtosEspeciais",
+                        "label": "Produtos Especiais (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Distribuidora",
+                                "id": "distribuidora",
+                                "type": "label"
+                            },
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "value": "BR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "shell",
+                                "fields": [
+                                    {
+                                        "value": "shell",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "raizen",
+                                "fields": [
+                                    {
+                                        "value": "Raizen",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ipiranga",
+                                "fields": [
+                                    {
+                                        "value": "Ipiranga",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "airbp",
+                                "fields": [
+                                    {
+                                        "value": "Air BP",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ale",
+                                "fields": [
+                                    {
+                                        "value": "Ale",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "cosan",
+                                "fields": [
+                                    {
+                                        "value": "Cosan",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "castrol",
+                                "fields": [
+                                    {
+                                        "value": "Castrol",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "chevron",
+                                "fields": [
+                                    {
+                                        "value": "Chevron",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "petronas",
+                                "fields": [
+                                    {
+                                        "value": "Petronas",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "total",
+                                "fields": [
+                                    {
+                                        "value": "total",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ypf",
+                                "fields": [
+                                    {
+                                        "value": "YPF",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "trr",
+                                "fields": [
+                                    {
+                                        "value": "TRR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Outras",
+                                "fields": [
+                                    {
+                                        "value": "Outras",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition": {
+                            "field": "isClienteBR",
+                            "situation": "false"
+                        }
+                    },
+                    {
+                        "id": "querosene",
+                        "label": "Querosene (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Distribuidora",
+                                "id": "distribuidora",
+                                "type": "label"
+                            },
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "value": "BR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "shell",
+                                "fields": [
+                                    {
+                                        "value": "shell",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "raizen",
+                                "fields": [
+                                    {
+                                        "value": "Raizen",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ipiranga",
+                                "fields": [
+                                    {
+                                        "value": "Ipiranga",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "airbp",
+                                "fields": [
+                                    {
+                                        "value": "Air BP",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ale",
+                                "fields": [
+                                    {
+                                        "value": "Ale",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "cosan",
+                                "fields": [
+                                    {
+                                        "value": "Cosan",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "castrol",
+                                "fields": [
+                                    {
+                                        "value": "Castrol",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "chevron",
+                                "fields": [
+                                    {
+                                        "value": "Chevron",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "petronas",
+                                "fields": [
+                                    {
+                                        "value": "Petronas",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "total",
+                                "fields": [
+                                    {
+                                        "value": "total",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "ypf",
+                                "fields": [
+                                    {
+                                        "value": "YPF",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "trr",
+                                "fields": [
+                                    {
+                                        "value": "TRR",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Outras",
+                                "fields": [
+                                    {
+                                        "value": "Outras",
+                                        "columnId": "distribuidora"
+                                    },
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition": {
+                            "field": "isClienteBR",
+                            "situation": "false"
+                        }
+                    }
+                ]
+            }
+        },
+        "tipoContato":    {
+            "type" : "tipoContato",
+            "form" : {
+                "type" : "tipoContato",
+                "fields" : [
+                    {
+                        "id" : "tipoContato",
+                        "label" : "Tipo de Contato",
+                        "type" : "list",
+                        "expand" : true,
+                        "require" : true,
+                        "options" : [
+                            {
+                                "label" : "Contato via Telefone",
+                                "value" : "Contato via Telefone"
+                            },
+                            {
+                                "label" : "Contato via Email",
+                                "value" : "Contato via Email"
+                            },
+                            {
+                                "label" : "Visita ao Cliente",
+                                "value" : "Visita ao Cliente"
+                            }
+                        ]
+                    },
+                    {
+                        "id" : "nome",
+                        "type" : "string",
+                        "label" : "Nome",
+                        "expand" : true,
+                        "require" : true
+                    },
+                    {
+                        "id" : "email",
+                        "type" : "string",
+                        "label" : "Email",
+                        "expand" : true,
+                        "require" : true
+                    },
+                    {
+                        "id" : "telefone1",
+                        "label" : "Telefone 1",
+                        "type" : "string",
+                        "expand" : true,
+                        "require" : true,
+                        "mask" : [
+                            "9999-9999",
+                            "99999-9999",
+                            "(99) 9999-9999",
+                            "(99) 99999-9999"
+                        ]
+                    },
+                    {
+                        "id" : "telefone2",
+                        "label" : "Telefone 2",
+                        "type" : "string",
+                        "expand" : true,
+                        "require" : true,
+                        "mask" : [
+                            "9999-9999",
+                            "99999-9999",
+                            "(99) 9999-9999",
+                            "(99) 99999-9999"
+                        ]
+                    },
+                    {
+                        "id" : "telefone3",
+                        "label" : "Telefone 3",
+                        "type" : "string",
+                        "expand" : true,
+                        "require" : true,
+                        "mask" : [
+                            "9999-9999",
+                            "99999-9999",
+                            "(99) 9999-9999",
+                            "(99) 99999-9999"
+                        ]
+                    },
+                    {
+                        "id" : "telefone4",
+                        "label" : "Telefone 4",
+                        "type" : "string",
+                        "expand" : true,
+                        "require" : true,
+                        "mask" : [
+                            "9999-9999",
+                            "99999-9999",
+                            "(99) 9999-9999",
+                            "(99) 99999-9999"
+                        ]
+                    },
+                    {
+                        "id" : "cargo",
+                        "type" : "string",
+                        "label" : "Cargo",
+                        "expand" : true,
+                        "require" : true
+                    },
+                    {
+                        "id" : "comentario",
+                        "label" : "Comentários",
+                        "type" : "textarea",
+                        "expand" : true,
+                        "require" : true
+                    }
+                ]
+            }
+        },
+        "tecnica" :    {
+            "type" : "tecnica",
+            "form" : {
+                "type" : "tecnica",
+                "fields" : [
+                    {
+                        "id" : "propositoVisita",
+                        "label" : "Propósito da Visita",
+                        "type" : "checklist",
+                        "expand" : true,
+                        "require" : true,
+                        "options" : [
+                            {
+                                "label" : "Inspeção do Posto de Abastecimento",
+                                "value" : "inspecaoPosto"
+                            },
+                            {
+                                "label" : "Indicação de Produtos",
+                                "value" : "indicacaoProdutos"
+                            },
+                            {
+                                "label" : "Avaliação de Risco de SMS (SISIN)",
+                                "value" : "avaliacaoRisco"
+                            },
+                            {
+                                "label" : "Atendimento a Reclamação",
+                                "value" : "atendimentoReclamacao"
+                            },
+                            {
+                                "label" : "Desenvolvimento de Produtos",
+                                "value" : "desenvolvimentoProdutos"
+                            },
+                            {
+                                "label" : "Outros",
+                                "value" : "outros"
+                            }
+                        ]
+                    },
+                    {
+                        "id" : "comentario",
+                        "label" : "Comentários",
+                        "type" : "textarea",
+                        "expand" : true,
+                        "require" : true
+                    },
+                    {
+                        "id" : "isfichaTecnica",
+                        "label" : "Preencher Ficha Técnica?",
+                        "type" : "boolean",
+                        "initValue" : false,
+                        "expand" : true,
+                        "require" : true
+                    },
+                    {
+                        "id" : "isTanqueBaciaContencao",
+                        "label" : "Tanque(s) possuem Bacia de Contenção?",
+                        "type" : "boolean",
+                        "expand" : true,
+                        "require" : true,
+                        "condition" : {
+                            "field" : "isfichaTecnica",
+                            "situation" : "true"
+                        }
+                    },    
+                    {
+                        "id" : "isPistaAbastecimento",
+                        "label" : "Posto Interno possui Pista de Abastecimento?",
+                        "type" : "boolean",
+                        "expand" : true,
+                        "require" : true,
+                        "condition" : {
+                            "field" : "isfichaTecnica",
+                            "situation" : "true"
+                        }
+                    }, 
+                    {
+                        "id" : "isTanqueDescargaSelada",
+                        "label" : "Tanque com Descarga Selada?",
+                        "type" : "boolean",
+                        "expand" : true,
+                        "require" : true,
+                        "condition" : {
+                            "field" : "isfichaTecnica",
+                            "situation" : "true"
+                        }
+                    }, 
+                    {
+                        "id" : "isBombaDescarga",
+                        "label" : "Possui Bomba de Descarga?",
+                        "type" : "boolean",
+                        "expand" : true,
+                        "require" : true,
+                        "condition" : {
+                            "field" : "isfichaTecnica",
+                            "situation" : "true"
+                        }
+                    }, 
+                    {
+                        "id" : "isDescargaAcessivel",
+                        "label" : "Ponto de Descarga Acessível ao Caminhão Tanque BR?",
+                        "type" : "boolean",
+                        "expand" : true,
+                        "require" : true,
+                        "condition" : {
+                            "field" : "isfichaTecnica",
+                            "situation" : "true"
+                        }
+                    }, 
+                    {
+                        "id" : "isCaixaSeparadora",
+                        "label" : "Caixa Separadora de Água e Óleo está interligada à Pista de Abastecimento?",
+                        "type" : "boolean",
+                        "expand" : true,
+                        "require" : true,
+                        "condition" : {
+                            "field" : "isfichaTecnica",
+                            "situation" : "true"
+                        }
+                    }, 
+                    {
+                        "id" : "isCombateIncendio",
+                        "label" : "Possui Extintores e/ou Outros Equipamentos de Combate a Incêndio?",
+                        "type" : "boolean",
+                        "expand" : true,
+                        "require" : true,
+                        "condition" : {
+                            "field" : "isfichaTecnica",
+                            "situation" : "true"
+                        }
+                    }
+                ]
+            }
+        },
+        "visita" :    {
+            "type" : "visita",
+            "form" : {
+                "type" : "visita",
+                "fields" : [
+                    {
+                        "id" : "isVisitaRealizada",
+                        "label" : "Visita Realizada?",
+                        "type" : "boolean",
+                        "expand" : true,
+                        "require" : true
+                    },
+                    {
+                        "id" : "dataDoRegistro",
+                        "label" : "Data do Registro",
+                        "type" : "date",
+                        "mask" : "DD/MM/YYYY",
+                        "expand" : true,
+                        "require" : true
+                    },
+                    {
+                        "id" : "nome",
+                        "label" : "Nome",
+                        "type" : "string",
+                        "expand" : true,
+                        "require" : true,
+                        "condition" : {
+                            "field" : "isVisitaRealizada",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id" : "email",
+                        "label" : "Email",
+                        "type" : "string",
+                        "expand" : true,
+                        "require" : true,
+                        "condition" : {
+                            "field" : "isVisitaRealizada",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id" : "telefone",
+                        "label" : "Telefone",
+                        "type" : "string",
+                        "expand" : true,
+                        "require" : true,
+                        "mask" : [
+                            "9999-9999",
+                            "99999-9999",
+                            "(99) 9999-9999",
+                            "(99) 99999-9999"
+                        ],
+                        "condition" : {
+                            "field" : "isVisitaRealizada",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id" : "cargo",
+                        "label" : "Cargo",
+                        "type" : "string",
+                        "expand" : true,
+                        "require" : true,
+                        "condition" : {
+                            "field" : "isVisitaRealizada",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id" : "comentario",
+                        "label" : "Comentários",
+                        "type" : "textarea",
+                        "expand" : true,
+                        "require" : true,
+                        "condition" : {
+                            "field" : "isVisitaRealizada",
+                            "situation" : "true"
+                        }
+                    }
+                ]
+            }
+        },
+        "negociacao" : {
+            "type" : "negociacao",
+            "form" : {
+                "type": "negociacao",
+                "fields": [
+                    {
+                        "id": "diesel",
+                        "label": "Diesel (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Expectativa de Fechamento",
+                                "id": "expectativaFechamento",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "expectativaFechamento"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "lubrificante",
+                        "label": "Lubrificantes (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Expectativa de Fechamento",
+                                "id": "expectativaFechamento",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "expectativaFechamento"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "gasolina",
+                        "label": "Gasolina (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Expectativa de Fechamento",
+                                "id": "expectativaFechamento",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "expectativaFechamento"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "alcool",
+                        "label": "Álcool (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Expectativa de Fechamento",
+                                "id": "expectativaFechamento",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "expectativaFechamento"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "arla32",
+                        "label": "Arla 32 (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Expectativa de Fechamento",
+                                "id": "expectativaFechamento",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "expectativaFechamento"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "combustiveisClarosEspeciais",
+                        "label": "Combustíveis Claros Especiais (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Expectativa de Fechamento",
+                                "id": "expectativaFechamento",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "expectativaFechamento"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "combustiveisEscuros",
+                        "label": "Combustíveis Escuros (Ton)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Expectativa de Fechamento",
+                                "id": "expectativaFechamento",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "expectativaFechamento"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "asfalto",
+                        "label": "Asfalto (Ton)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Expectativa de Fechamento",
+                                "id": "expectativaFechamento",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "expectativaFechamento"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "combustiveisAviacao",
+                        "label": "Combustiveis de Aviação (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Expectativa de Fechamento",
+                                "id": "expectativaFechamento",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "expectativaFechamento"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "combustiveisSolidos",
+                        "label": "Combustiveis Sólidos (Ton)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Expectativa de Fechamento",
+                                "id": "expectativaFechamento",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "expectativaFechamento"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "produtosEspeciais",
+                        "label": "Produtos Especiais (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Expectativa de Fechamento",
+                                "id": "expectativaFechamento",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "expectativaFechamento"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "querosene",
+                        "label": "Querosene (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Expectativa de Fechamento",
+                                "id": "expectativaFechamento",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "expectativaFechamento"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "propostaAnalise" :    {
+            "type" : "proposta",
+            "form" : {
+                "type" : "proposta",
+                "fields" : [
+                    {
+                        "id" : "dataRegistro",
+                        "label" : "Data do Registro",
+                        "type" : "date",
+                        "mask" : "DD/MM/YYYY",
+                        "expand" : true,
+                        "require" : true
+                    }
+                ]
+            }
+        },
+        "propostaBI" :    {
+            "type" : "proposta",
+            "form" : {
+                "type" : "proposta",
+                "fields" : [
+                    {
+                        "id" : "dataRegistro",
+                        "label" : "Data do Registro",
+                        "type" : "date",
+                        "mask" : "DD/MM/YYYY",
+                        "expand" : true,
+                        "require" : true
+                    }
+                ]
+            }
+        },
+        "finalizacao" :    {
+            "type" : "finalizacao",
+            "form" : {
+                "type" : "finalizacao",
+                "expandable" : {
+                    "field" : "isContrato",
+                    "situation" : "true"
+                },
+                "fields" : [
+                    {
+                        "id" : "isClienteConquistado",
+                        "label" : "O cliente foi conquistado ?",
+                        "type" : "boolean",
+                        "expand" : true,
+                        "require" : true
+                    },
+                    {
+                        "id": "diesel",
+                        "label": "Diesel (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vigência Final",
+                                "id": "vigenciaFinal",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "vigenciaFinal"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition" : {
+                            "field" : "isClienteConquistado",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id": "lubrificante",
+                        "label": "Lubrificantes (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vigência Final",
+                                "id": "vigenciaFinal",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "vigenciaFinal"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition" : {
+                            "field" : "isClienteConquistado",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id": "gasolina",
+                        "label": "Gasolina (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vigência Final",
+                                "id": "vigenciaFinal",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "vigenciaFinal"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition" : {
+                            "field" : "isClienteConquistado",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id": "alcool",
+                        "label": "Álcool (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vigência Final",
+                                "id": "vigenciaFinal",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "vigenciaFinal"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition" : {
+                            "field" : "isClienteConquistado",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id": "arla32",
+                        "label": "Arla 32 (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vigência Final",
+                                "id": "vigenciaFinal",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "vigenciaFinal"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition" : {
+                            "field" : "isClienteConquistado",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id": "combustiveisClarosEspeciais",
+                        "label": "Combustíveis Claros Especiais (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vigência Final",
+                                "id": "vigenciaFinal",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "vigenciaFinal"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition" : {
+                            "field" : "isClienteConquistado",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id": "combustiveisEscuros",
+                        "label": "Combustíveis Escuros (Ton)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vigência Final",
+                                "id": "vigenciaFinal",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "vigenciaFinal"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition" : {
+                            "field" : "isClienteConquistado",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id": "asfalto",
+                        "label": "Asfaltos (Ton)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vigência Final",
+                                "id": "vigenciaFinal",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "vigenciaFinal"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition" : {
+                            "field" : "isClienteConquistado",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id": "combustiveisAviacao",
+                        "label": "Combustiveis de Aviação (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vigência Final",
+                                "id": "vigenciaFinal",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "vigenciaFinal"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition" : {
+                            "field" : "isClienteConquistado",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id": "combustiveisSolidos",
+                        "label": "Combustiveis Sólidos (Ton)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vigência Final",
+                                "id": "vigenciaFinal",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "vigenciaFinal"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition" : {
+                            "field" : "isClienteConquistado",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id": "produtosEspeciais",
+                        "label": "Produtos Especiais (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vigência Final",
+                                "id": "vigenciaFinal",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "vigenciaFinal"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition" : {
+                            "field" : "isClienteConquistado",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id": "querosene",
+                        "label": "Querosene (m3)",
+                        "type": "multifield",
+                        "expand": true,
+                        "showGrid": false,
+                        "columns": [
+                            {
+                                "label": "Vol. Contrato",
+                                "id": "volContrato",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vol. Spot",
+                                "id": "volSpot",
+                                "type": "input"
+                            },
+                            {
+                                "label": "Vigência Final",
+                                "id": "vigenciaFinal",
+                                "type": "date"
+                            }
+                        ],
+                        "rows": [
+                            {
+                                "id": "br",
+                                "fields": [
+                                    {
+                                        "columnId": "volContrato"
+                                    },
+                                    {
+                                        "columnId": "volSpot"
+                                    },
+                                    {
+                                        "columnId": "vigenciaFinal"
+                                    }
+                                ]
+                            }
+                        ],
+                        "condition" : {
+                            "field" : "isClienteConquistado",
+                            "situation" : "true"
+                        }
+                    },
+                    {
+                        "id" : "motivo",
+                        "label" : "Motivo",
+                        "type" : "checklist",
+                        "expand" : true,
+                        "require" : true,
+                        "options" : [
+                            {
+                                "label" : "Preço",
+                                "value" : "Preço"
+                            },
+                            {
+                                "label" : "Prazo",
+                                "value" : "Prazo"
+                            },
+                            {
+                                "label" : "Logística",
+                                "value" : "Logística"
+                            }
+                        ],
+                        "condition" : {
+                            "field" : "isClienteConquistado",
+                            "situation" : "false"
+                        }
+                    },
+                    {
+                        "id" : "concorrencia",
+                        "label" : "Concorrência",
+                        "type" : "checklist",
+                        "expand" : true,
+                        "require" : true,
+                        "options" : [
+                            {
+                                "label" : "Air BP",
+                                "value" : "Air BP"
+                            },
+                            {
+                                "label" : "Ale",
+                                "value" : "Ale"
+                            },
+                            {
+                                "label" : "Castrol",
+                                "value" : "Castrol"
+                            },
+                            {
+                                "label" : "Chevron",
+                                "value" : "Chevron"
+                            },
+                            {
+                                "label" : "Cosan",
+                                "value" : "Cosan"
+                            },
+                            {
+                                "label" : "Ipiranga",
+                                "value" : "Ipiranga"
+                            },
+                            {
+                                "label" : "Petronas",
+                                "value" : "Petronas"
+                            },
+                            {
+                                "label" : "Raizen",
+                                "value" : "Raizen"
+                            },
+                            {
+                                "label" : "Shell",
+                                "value" : "Shell"
+                            },
+                            {
+                                "label" : "Total",
+                                "value" : "Total"
+                            },
+                            {
+                                "label" : "YPF",
+                                "value" : "YPF"
+                            },
+                            {
+                                "label" : "TRR",
+                                "value" : "TRR"
+                            },
+                            {
+                                "label" : "Outras",
+                                "value" : "Outras"
+                            }
+                        ],
+                        "condition" : {
+                            "field" : "isClienteConquistado",
+                            "situation" : "false"
+                        }
+                    },
+                    {
+                        "id" : "comentario",
+                        "label" : "Comentários",
+                        "type" : "textarea",
+                        "expand" : true,
+                        "require" : true,
+                        "condition" : {
+                            "field" : "isClienteConquistado",
+                            "situation" : "false"
+                        }
+                    }
+
+                ]
+            }
+        },
+        "manutencao" :    {
+            "type" : "manutencao",
+            "form" : {
+                "type" : "manutencao",
+                "fields" : [
+                    {
+                        "id" : "isManutencaoEquipamento",
+                        "label" : "Manutenção de Equipamentos",
+                        "type" : "boolean",
+                        "expand" : true,
+                        "require" : true
+                    },
+                    {
+                        "id" : "manutencaoEquipamentoComentario",
+                        "label" : "Comentários",
+                        "type" : "textarea",
+                        "expand" : true,
+                        "require" : true
+                    },
+                    {
+                        "id" : "isAvaliacaoRiscoSMS",
+                        "label" : "Avaliação de Risco de SMS",
+                        "type" : "boolean",
+                        "expand" : true,
+                        "require" : true
+                    },
+                    {
+                        "id" : "avaliacaoRiscoComentario",
+                        "label" : "Comentários",
+                        "type" : "textarea",
+                        "expand" : true,
+                        "require" : true
+                    }
+                ]
+            }
+        }
+    },
+    goals : [
+        /*{
+            title : "Meta de Avaliação de Mercado",
+            metrics: {
+                goal : {
+                    value : 50,
+                    title : "avaliados"
+                },
+                periodo : "MM", //week : WW, year : YY, Mounth : MM, Day : DD
+            },
+            objectives :{
+                values : [
+                    { $match: { "activityType" : "avalicao" }},
+                    { $group: { "_id": "$activityType", "count": { $sum: 1 } } }
+                ],
+                remaining : "A avaliar"
+            }
+
+        },
+        {
+            title : "Meta de Propostas",
+            metrics: {
+                goal : {
+                    value : 20,
+                    title : "proposta"
+                },
+                periodo : "MM", //week : WW, year : YY, Mounth : MM, Day : DD
+            },
+            objectives :{
+                values : [
+                    { $match: { "activityType" : "proposta" }},
+                    { $group: { "_id": "$activityType", "count": { $sum: 1 } } }
+                ],
+                remaining : "A enviar"
+            }
+
+        }*/
+    ]
+}
