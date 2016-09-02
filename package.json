@@ -1,0 +1,10 @@
+{
+	"name": "node_1",
+	"description": "Primeiros projetos de Node.js",
+	"author": "Robson <robson.sevenmkt@gmail.com",
+	"version": "1.0.0",
+	"private": true,
+	"dependencies": {
+		"mongoose":"*"
+	}
+}
