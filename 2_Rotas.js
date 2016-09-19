@@ -1,4 +1,5 @@
 var http = require("http");
+var url = require("url");
 
 var server = http.createServer(function(request,response){
 	response.writeHead(200,{"Content-Type":"text/html"});
@@ -15,6 +16,10 @@ var server = http.createServer(function(request,response){
 	else{
 		response.write("<hl> Página não encontrada</h1>");
 	}
+
+	var resultado = url.parse(request.headers.host+request.url);
+	response.write('<br>');
+	response.write(resultado.href);
 
 	response.end();
 });

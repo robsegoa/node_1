@@ -6,7 +6,7 @@ response.writeHead(200,{"Content-Type":"text/html"});
 
 response.write("<hl> Hello World </h1>");
 response.write("<br>");
-response.write("<h3> Aulas node.js </h3>");
+response.write("<h3> node.js </h3>");
 var txt = arquivo.createWriteStream('./arquivos/logs.txt',{flags:'a'});
 txt.write(request.url+'\n');
 response.end();
@@ -18,5 +18,5 @@ response.end();
 
 
 server.listen(3000,function(){
-console.log("Servidor Hello World rodando");
+console.log("Servidor Hello World rodando porta 3000!");
 });
